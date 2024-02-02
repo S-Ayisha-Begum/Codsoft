@@ -1,0 +1,81 @@
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class Ta4 {
+    private static final int time = 250;
+    private static final String[] questions = {
+            "Which of the following is the capital of Arunachal Pradesh?",
+            "What are the major languages spoken in Andhra Pradesh?",
+            "What is the state flower of Haryana?",
+            "Which is the largest coffee-producing state of India?",
+            "Which state has the largest area?",
+            "Which state has the largest population?",
+            "In what state is Elephant Falls located?",
+            "Which state of India celebrates Hunter Holi, an 800-year tradition?",
+            "Yakshagana is the folk dance of which state?",
+            "What is the staple drink of Goa?"
+    };
+
+    private static final String[] Answers = {
+            "Itanagar",
+            "Telugu and Urdu",
+            "Lotus",
+            "Karnataka",
+            "Rajasthan",
+            "Uttar Pradesh",
+            "Meghalaya",
+            "Haryana",
+            "Karnataka",
+            "Feni"
+    };
+
+    private static int points = 0;
+
+    public static void main(String[] args) {
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            int s = time;
+
+            @Override
+            public void run() {
+                if (s > 0) {
+
+                    if(s%10==0){
+                        System.out.println("Time left: " + s + " seconds");
+                    }
+                    s--;
+                } else {
+                    System.out.println("Time's up!");
+                    t.cancel();
+                    Res();
+                    System.exit(0);
+                }
+            }
+        }, 0, 1000); // Schedule the timer to decrement every second
+
+        st();
+        Res();
+    }
+
+    private static void st() {
+        Scanner sc = new Scanner(System.in);
+
+        for (int i = 0; i < questions.length; i++) {
+            System.out.println("Question " + (i + 1) + ": " + questions[i]);
+            String userAns = sc.nextLine();
+
+            if (userAns.equalsIgnoreCase(Answers[i])) {
+                System.out.println("Correct!!\n");
+                points++;
+            } else {
+                System.out.println("Wrong. The correct answer is: " + Answers[i] + "\n");
+            }
+        }
+    }
+
+    private static void Res() {
+        System.out.println("Congrats! Your score: " + points + " out of " + questions.length);
+    }
+}
+
