@@ -1,0 +1,219 @@
+import java.util.Scanner;
+
+public class Ta3 {
+
+    private BankAcc account;
+
+    private static final int WITHDRAWAL_OP= 1;
+
+    private static final int DEPOSIT_OP = 2;
+
+    private static final int CHECK_BALANCE_OP = 3;
+
+    private static final int EXIT_OP = 4;
+
+    public Ta3(BankAcc acc) {
+
+        this.account = acc;
+
+    }
+
+    public void start() {
+
+        Scanner in = new Scanner(System.in);
+
+        while (true) {
+
+            displayMenu();
+
+            int st = getUserChoice(in);
+
+            switch (st) {
+
+                case WITHDRAWAL_OP:
+
+                    performWithdrawal(in);
+
+                    break;
+
+                case DEPOSIT_OP:
+
+                    performDeposit(in);
+
+                    break;
+
+                case CHECK_BALANCE_OP:
+
+                    checkAccountBalance();
+
+                    break;
+
+                case EXIT_OP:
+
+                    System.out.println("Exiting ATM...");
+
+                    return;
+
+                default:
+
+                    System.out.println("Invalid choice. Please try again.");
+
+            }
+
+        }
+
+    }
+
+    private int getUserChoice(Scanner sc) {
+
+        System.out.print("Enter your choice: ");
+
+        while (!sc.hasNextInt()) {
+
+            System.out.println("Invalid input. Please enter a number.");
+
+            sc.next();
+
+        }
+
+        return sc.nextInt();
+
+    }
+
+    private void displayMenu() {
+
+        System.out.println("Welcome to the ATM!");
+
+        System.out.println(WITHDRAWAL_OP + ". Withdraw");
+
+        System.out.println(DEPOSIT_OP + ". Deposit");
+
+        System.out.println(CHECK_BALANCE_OP + ". Check balance");
+
+        System.out.println(EXIT_OP + ". Exit");
+
+    }
+
+    private void performWithdrawal(Scanner sc) {
+
+        System.out.print("Enter withdrawal amount: ");
+
+        double amount;
+
+        while (true) {
+
+            try {
+
+                amount = Double.parseDouble(sc.next());
+
+                break;
+
+            } catch (NumberFormatException e) {
+
+                System.out.println("Invalid input. Please enter a valid number.");
+
+                System.out.print("Enter withdrawal amount: ");
+
+            }
+
+        }
+
+        if (account.withdraw(amount)) {
+
+            System.out.println("Withdrawal successful.");
+
+        } else {
+
+            System.out.println("Insufficient balance.");
+
+        }
+
+    }
+
+    private void performDeposit(Scanner sc) {
+
+        System.out.print("Enter deposit amount: ");
+
+        double am;
+
+        while (true) {
+
+            try {
+
+                am = Double.parseDouble(sc.next());
+
+                break;
+
+            } catch (NumberFormatException e) {
+
+                System.out.println("Invalid input. Please enter a valid number.");
+
+                System.out.print("Enter deposit amount: ");
+
+            }
+
+        }
+
+        account.deposit(am);
+
+        System.out.println("Deposit successful.");
+
+    }
+
+    private void checkAccountBalance() {
+
+        System.out.println("Your account balance is: " + account.getBalance());
+
+    }
+
+    private static class BankAcc {
+
+        private double bal;
+
+        public BankAcc(double initBal) {
+
+            this.bal = initBal;
+
+        }
+
+        public boolean withdraw(double am) {
+
+            if (am <= bal) {
+
+                bal -= am;
+
+                return true;
+
+            } else {
+
+                return false;
+
+            }
+
+        }
+
+        public void deposit(double am) {
+
+            bal += am;
+
+        }
+
+        public double getBalance() {
+
+            return bal;
+
+        }
+
+    }
+
+    public static void main(String[] args) {
+
+        BankAcc account = new BankAcc(1000.0);
+
+        Ta3 atm = new Ta3(account);
+
+        atm.start();
+
+    }
+
+}
