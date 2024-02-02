@@ -1,0 +1,63 @@
+import java.util.Scanner;
+
+public class Ta2 {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the Student name: ");
+        String student =  sc.nextLine();
+        System.out.println("\nWelcome to Grade Calculator " + student);
+        int number = 0;
+        System.out.println("Enter The Subjects :");
+        number = sc.nextInt();
+        int[] marks = new int[number];
+        for(int i = 0; i < marks.length; i++)
+        {
+            System.out.println("\nEnter The Subject Mark " + (i + 1) + ":");
+            marks[i] = sc.nextInt();
+
+            while(marks[i] < 0 || marks[i] > 100)
+            {
+                System.out.println("\nPlease Enter The Valid  Marks for Subject " + (i + 1) + ":");
+                marks[i] = sc.nextInt();
+            }
+        }
+        int finalMark = 0;
+        double avgMark = 0.0;
+        String grads = "";
+
+        for(int m = 0; m < marks.length; m++)
+        {
+            finalMark += marks[m];
+        }
+        avgMark = finalMark/number;
+
+        if(avgMark >= 80)
+        {
+            grads = "A";
+        }else if(avgMark >= 70 && avgMark < 80)
+        {
+            grads = "B";
+        }else if(avgMark >= 60 && avgMark < 70)
+        {
+            grads = "C";
+        }else if(avgMark >= 50 && avgMark < 60)
+        {
+            grads = "D";
+        }else if(avgMark >= 40 && avgMark < 50)
+        {
+            grads = "E";
+        }else if(avgMark >= 30 && avgMark < 40)
+        {
+            grads = "F";
+        }else
+        {
+            grads = "FF";
+        }
+        System.out.printf("\n\nStudent Name: %s\n\nEnter The Subjects: %d\nTotal Marks: %d\nAverage Mark: %.2f\nAchieved Grade: %s",
+                student,number,finalMark,avgMark,grads);
+    }
+
+}
+
